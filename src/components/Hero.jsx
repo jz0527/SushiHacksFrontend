@@ -1,5 +1,6 @@
 import React from 'react';
 import Typed from 'react-typed';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -26,7 +27,9 @@ const Hero = () => {
           />
         </div>
         <p className='md:text-2xl text-xl font-bold text-gray-500'>Identify your ideal audience and create impactful, tailored advertisements effortlessly with our AI-powered solution.</p>
-        <button className='bg-[#00df9a] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black'>Get Started</button>
+        <Link to="/Landing">
+          <button className='bg-[#00df9a] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black'>Get Started</button>
+        </Link>
       </div>
     </div>
   );
