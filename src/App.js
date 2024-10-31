@@ -27,7 +27,7 @@ function App() {
         </>
       )}
       
-      {currentPage === 'Landing' && (
+      {currentPage === 'landing' && (
         <Landing />
       )}
     </div>
