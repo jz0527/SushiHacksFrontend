@@ -18,7 +18,6 @@ function App() {
       
       {currentPage === 'home' && (
         <>
-          {/* Pass setCurrentPage to Hero as a prop */}
           <Hero setCurrentPage={setCurrentPage} />
           <Analytics />
           <Newsletter />
@@ -28,7 +27,7 @@ function App() {
       )}
       
       {currentPage === 'landing' && (
-        <Landing />
+        <Landing setCurrentPage={setCurrentPage} />
       )}
     </div>
   );
