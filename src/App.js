@@ -18,12 +18,12 @@ function App() {
       
       {currentPage === 'home' && (
         <>
-          <Hero />
+          {/* Pass setCurrentPage to Hero as a prop */}
+          <Hero setCurrentPage={setCurrentPage} />
           <Analytics />
           <Newsletter />
           <Cards />
           <Footer />
-
         </>
       )}
       
