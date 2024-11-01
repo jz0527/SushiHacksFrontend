@@ -42,7 +42,7 @@ const Landing = ({ setCurrentPage }) => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder='Provide a product description...'
-          className='w-full max-w-[400px] h-[100px] border-2 border-[#00df9a] rounded-md p-4 text-black bg-white'
+          className='w-full max-w-[400px] h-[100px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
         />
 
         {/* Drop Area */}
