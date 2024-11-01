@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const Landing = ({ setCurrentPage }) => {
   const [image, setImage] = useState(null);
+  const [description, setDescription] = useState('');
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -22,6 +23,12 @@ const Landing = ({ setCurrentPage }) => {
     e.preventDefault();
   };
 
+  const handleSubmit = () => {
+    // Add submit logic here
+    console.log("Submitted description:", description);
+    console.log("Submitted image:", image);
+  };
+
   return (
     <div className='text-white h-screen bg-black flex flex-col items-center justify-center'>
       <div className='text-center p-10 max-w-[800px] mx-auto flex flex-col items-center gap-6'>
@@ -29,7 +36,15 @@ const Landing = ({ setCurrentPage }) => {
         <p className='text-xl'>
           Our platform helps small businesses connect with their ideal audiences through targeted, AI-driven advertising.
         </p>
-        
+
+        {/* Product Description Text Box */}
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder='Provide a product description...'
+          className='w-full max-w-[400px] h-[100px] border-2 border-[#00df9a] rounded-md p-4 text-black bg-white'
+        />
+
         {/* Drop Area */}
         <div
           onDrop={handleDrop}
@@ -54,8 +69,11 @@ const Landing = ({ setCurrentPage }) => {
 
         {/* Buttons */}
         <div className='flex gap-4'>
-          <button className='bg-[#00df9a] w-[200px] rounded-md font-medium py-3 text-black'>
-            Learn More
+          <button
+            onClick={handleSubmit}
+            className='bg-[#00df9a] w-[200px] rounded-md font-medium py-3 text-black'
+          >
+            Submit
           </button>
           <button
             onClick={() => setCurrentPage('home')}
