@@ -9,6 +9,7 @@ import Landing from './components/Landing';
 import Loading from './components/Loading';
 import Output from './components/Output';
 
+
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [loading, setLoading] = useState(false);
