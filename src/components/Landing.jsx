@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 const Landing = ({ setCurrentPage }) => {
   const [image, setImage] = useState(null);
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [extra, setExtra] = useState('');
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -25,7 +27,9 @@ const Landing = ({ setCurrentPage }) => {
 
   const handleSubmit = () => {
     // Add submit logic here
+    console.log("Submitted name:", name);
     console.log("Submitted description:", description);
+    console.log("Submitted addition info:", extra);
     console.log("Submitted image:", image);
   };
 
@@ -37,11 +41,31 @@ const Landing = ({ setCurrentPage }) => {
           Our platform helps small businesses connect with their ideal audiences through targeted, AI-driven advertising.
         </p>
 
-        {/* Product Description Text Box */}
+        {/*Product Name Textbox*/}
+        <div className='flex flex-col sm:flex-row items-center justify-between w-full max-w-[400px]'>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder='Enter the product name...'
+              className='w-full max-w-[400px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
+              required
+            />
+          </div>
+
+        {/* Product Description Textbox */}
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder='Provide a product description...'
+          className='w-full max-w-[400px] h-[100px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
+          required
+        />
+
+        {/* Additional Information Textbox */}
+        <textarea
+          value={extra}
+          onChange={(e) => setExtra(e.target.value)}
+          placeholder='Provide additional information...'
           className='w-full max-w-[400px] h-[100px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
         />
 
