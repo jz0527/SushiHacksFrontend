@@ -36,17 +36,14 @@ const Landing = ({ setCurrentPage }) => {
   return (
     <div className='text-white h-screen bg-black flex flex-col items-center justify-center'>
       <div className='text-center p-10 max-w-[800px] mx-auto flex flex-col items-center gap-6'>
-        <h1 className='text-5xl font-bold'>Welcome to Your AI-Powered Advertising Solution</h1>
-        <p className='text-xl'>
-          Our platform helps small businesses connect with their ideal audiences through targeted, AI-driven advertising.
-        </p>
+        <h1 className='text-5xl font-bold'>Getting Started</h1>
 
         {/*Product Name Textbox*/}
         <div className='flex flex-col sm:flex-row items-center justify-between w-full max-w-[400px]'>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder='Enter the product name...'
+              placeholder='Enter the product name*'
               className='w-full max-w-[400px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
               required
             />
@@ -56,7 +53,7 @@ const Landing = ({ setCurrentPage }) => {
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder='Provide a product description...'
+          placeholder='Provide a product description*'
           className='w-full max-w-[400px] h-[100px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
           required
         />
@@ -65,7 +62,7 @@ const Landing = ({ setCurrentPage }) => {
         <textarea
           value={extra}
           onChange={(e) => setExtra(e.target.value)}
-          placeholder='Provide additional information...'
+          placeholder='Provide additional information'
           className='w-full max-w-[400px] h-[100px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
         />
 
