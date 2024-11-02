@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 
-const Landing = ({ setCurrentPage }) => {
+const Landing = ({ setCurrentPage, onSubmit }) => {
   const [image, setImage] = useState(null);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [extra, setExtra] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [submittedData, setSubmittedData] = useState(null);
+  const [error, setError] = useState('');
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -27,10 +30,25 @@ const Landing = ({ setCurrentPage }) => {
 
   const handleSubmit = () => {
     // Add submit logic here
+    if (!name || !description) {
+      setError('Product Name and Description are required. Please fill them out to proceed.');
+      return;
+    }
+
+    setError('');
+
     console.log("Submitted name:", name);
     console.log("Submitted description:", description);
     console.log("Submitted addition info:", extra);
     console.log("Submitted image:", image);
+
+    const data = { name, description, extra, image };
+    onSubmit(data); // Pass form data to App.js
+
+    setCurrentPage('loading');
+    setTimeout(() => {
+      setCurrentPage('output');
+    }, 3000); 
   };
 
   return (
@@ -87,6 +105,10 @@ const Landing = ({ setCurrentPage }) => {
             <img src={image} alt='Uploaded' className='w-full max-w-[400px] rounded-md shadow-lg' />
           </div>
         )}
+
+        {/* Display Error Message */}
+        {error && <p className='text-red-500'>{error}</p>}
+
 
         {/* Buttons */}
         <div className='flex gap-4'>
