@@ -60,7 +60,8 @@ async def submit_output(data: OutputDataRequest, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(new_data)
         return {"message": "Data stored successfully", "data": new_data}
-
+    
+# the code goes here, the get method puts the user input to this file path
 @app.get("/output_data/{name}")
 async def get_output_data(name: str, db: Session = Depends(get_db)):
     data = db.query(models.OutputData).filter(models.OutputData.name == name).first()
