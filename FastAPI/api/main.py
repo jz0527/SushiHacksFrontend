@@ -1,20 +1,24 @@
+# main.py
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from typing import Optional
+import os
+
 from database import SessionLocal, engine
 import models
-from fastapi.middleware.cors import CORSMiddleware
+from gemini import call_gemini  # Import the function from gemini.py
 
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Allow CORS from the frontend URL
+# Allow CORS from all origins (adjust as needed)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Frontend URL
+    allow_origins=["*"],  # For development; specify origins in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,8 +28,8 @@ app.add_middleware(
 class OutputDataRequest(BaseModel):
     name: str
     description: str
-    extra: str = None
-    image: str = None
+    extra: Optional[str] = None
+    image: Optional[str] = None
 
 # Dependency to get a database session
 def get_db():
@@ -41,44 +45,40 @@ def read_root():
 
 # Helper function to get output data by name
 def get_output_data_by_name(name: str, db: Session) -> Optional[models.OutputData]:
-    """
-    Retrieve output data from the database by name.
-    
-    Args:
-        name (str): The name of the output data to retrieve.
-        db (Session): The database session.
-    
-    Returns:
-        Optional[models.OutputData]: The retrieved output data or None if not found.
-    """
     return db.query(models.OutputData).filter(models.OutputData.name == name).first()
 
 # POST endpoint to submit or update data
 @app.post("/submit_output/")
 async def submit_output(data: OutputDataRequest, db: Session = Depends(get_db)):
+    # Call Gemini to get model response based on form data
+    gemini_response = call_gemini(data.name, data.description, data.extra or "No Additional Information to Provide")
+
+    if not gemini_response:
+        raise HTTPException(status_code=500, detail="Failed to get response from Gemini.")
+
     # Check if a record with the same name already exists
     existing_data = get_output_data_by_name(data.name, db)
-    
+
     if existing_data:
         # Update existing record
-        existing_data.description = data.description
+        existing_data.description = gemini_response  # Store Gemini response
         existing_data.extra = data.extra
         existing_data.image = data.image
         db.commit()
         db.refresh(existing_data)
-        return {"message": "Data updated successfully", "data": existing_data}
+        return {"message": "Data updated successfully", "data": existing_data, "gemini_response": gemini_response}
     else:
-        # Insert new record if no existing record is found
+        # Insert new record
         new_data = models.OutputData(
             name=data.name,
-            description=data.description,
+            description=gemini_response,  # Store Gemini response
             extra=data.extra,
             image=data.image,
         )
         db.add(new_data)
         db.commit()
         db.refresh(new_data)
-        return {"message": "Data stored successfully", "data": new_data}
+        return {"message": "Data stored successfully", "data": new_data, "gemini_response": gemini_response}
 
 # GET endpoint to retrieve data by name
 @app.get("/output_data/{name}")
