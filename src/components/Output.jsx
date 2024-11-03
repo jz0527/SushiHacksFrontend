@@ -43,6 +43,7 @@ const Output = ({ formData }) => {
     <div className="text-white h-screen bg-black flex flex-col items-center justify-center">
       <h1 className="text-5xl font-bold mb-6">Submission Summary</h1>
       <div className="text-lg max-w-[600px] p-4 bg-black/50 border-2 border-[#00df9a] rounded-md">
+        <p><strong>ID:</strong> {submittedData.id}</p>
         <p><strong>Product Name:</strong> {submittedData.name}</p>
         <p><strong>Description:</strong> {submittedData.description}</p>
         {submittedData.extra && <p><strong>Additional Info:</strong> {submittedData.extra}</p>}
