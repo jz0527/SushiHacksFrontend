@@ -5,8 +5,6 @@ const Landing = ({ setCurrentPage, onSubmit }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [extra, setExtra] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [submittedData, setSubmittedData] = useState(null);
   const [error, setError] = useState('');
 
   const handleDrop = (e) => {
@@ -29,26 +27,19 @@ const Landing = ({ setCurrentPage, onSubmit }) => {
   };
 
   const handleSubmit = () => {
-    // Add submit logic here
     if (!name || !description) {
       setError('Product Name and Description are required. Please fill them out to proceed.');
       return;
     }
 
     setError('');
-
-    console.log("Submitted name:", name);
-    console.log("Submitted description:", description);
-    console.log("Submitted addition info:", extra);
-    console.log("Submitted image:", image);
-
     const data = { name, description, extra, image };
     onSubmit(data); // Pass form data to App.js
 
     setCurrentPage('loading');
     setTimeout(() => {
       setCurrentPage('output');
-    }, 3000); 
+    }, 3000);
   };
 
   return (
@@ -56,16 +47,14 @@ const Landing = ({ setCurrentPage, onSubmit }) => {
       <div className='text-center p-10 max-w-[800px] mx-auto flex flex-col items-center gap-6'>
         <h1 className='text-5xl font-bold'>Getting Started</h1>
 
-        {/*Product Name Textbox*/}
-        <div className='flex flex-col sm:flex-row items-center justify-between w-full max-w-[400px]'>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder='Enter the product name*'
-              className='w-full max-w-[400px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
-              required
-            />
-          </div>
+        {/* Product Name Textbox */}
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder='Enter the product name*'
+          className='w-full max-w-[400px] border-2 border-[#00df9a] rounded-md p-4 text-gray-400 bg-black/50'
+          required
+        />
 
         {/* Product Description Textbox */}
         <textarea
@@ -108,7 +97,6 @@ const Landing = ({ setCurrentPage, onSubmit }) => {
 
         {/* Display Error Message */}
         {error && <p className='text-red-500'>{error}</p>}
-
 
         {/* Buttons */}
         <div className='flex gap-4'>

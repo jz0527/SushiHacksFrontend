@@ -1,14 +1,11 @@
+from sqlalchemy import Column, Integer, String
 from database import Base
-from sqlalchemy import Column, Integer, String, Boolean, Float
 
-
-class Transaction(Base):
-    __tablename__ = 'transactions'
+class OutputData(Base):
+    __tablename__ = 'output_data'
 
     id = Column(Integer, primary_key=True, index=True)
-    amount = Column(Float)
-    category = Column(String)
+    name = Column(String, unique=True, index=True)  # Keeps name unique to avoid duplicates
     description = Column(String)
-    is_income = Column(Boolean)
-    date = Column(String)
-
+    extra = Column(String, nullable=True)
+    image = Column(String, nullable=True)  # Stores image URL or base64 string
